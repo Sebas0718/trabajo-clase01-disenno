@@ -174,14 +174,29 @@ Intentar emitir una receta con el código legado requiere que la base de datos S
 
 **Predicción:**
 
+El borde rechazará datos inválidos antes de crear una `Receta`, y una falla de
+la farmacia se propagará como un error de dominio con contexto y registro. La
+entrada externa no podrá agregar campos ni mutarse después de validarse.
+
 **Observación:**
+
+Las once pruebas de etapa 6 pasan. `SolicitudReceta` usa Pydantic con
+`extra="forbid"` y `frozen=True` en `clinicasegura/aplicacion/borde.py:10`,
+`a_receta` entrega tipos del dominio en `borde.py:27`, y el servicio registra
+y propaga `FarmaciaNoDisponible` en `clinicasegura/dominio/servicio.py:28`.
 
 ```
 ```
 
 **Explicación:**
 
+La frontera parsea y convierte una sola vez; aguas abajo circula `Receta`, no
+un diccionario. Los errores de timeout no se degradan silenciosamente y llevan
+el nombre de la cadena y el folio, por lo que el fallo es observable.
+
 **Sello:**
+
+b06c580a3472d257
 
 ## Cierre — Los principios en conflicto
 
@@ -190,4 +205,14 @@ criterio resolvió el conflicto. Cite el archivo donde se ve la decisión.
 
 **Conflicto 1:**
 
+Testabilidad frente a flexibilidad: el servicio conserva una firma estricta de
+cuatro puertos aunque el arranque necesite adaptadores concretos. Se resolvió
+en favor de la testabilidad inyectando los adaptadores desde
+`clinicasegura/arranque.py:16`.
+
 **Conflicto 2:**
+
+Diseño defensivo frente a tolerancia: un timeout de farmacia podría ocultarse o
+degradar el resultado, pero una receta es crítica. Se resolvió propagando
+`FarmaciaNoDisponible` y registrando el contexto en
+`clinicasegura/dominio/servicio.py:28`.
