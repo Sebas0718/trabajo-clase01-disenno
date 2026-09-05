@@ -17,6 +17,7 @@ Carné:
 ## Etapa 0 — Diagnóstico
 
 **Predicción:**
+Antes de abrir legado.py, mi predicción es que se están violando unos 8 o 9 de los 11 principios. Siento que seguro todo lo de acoplamiento y cohesión está destruido porque todo está en un solo archivo, pero me imagino que al menos principios como el de "no reinventar la rueda" (usar librerías estándar) o el de portabilidad tal vez sí se salvan de pura casualidad. Vamos a ver
 
 **Observación:**
 
@@ -44,6 +45,9 @@ Carné:
 
 **Predicción:**
 
+Leyendo la clase ServicioRecetas, le cuento 6 responsabilidades distintas: valida la entrada, calcula el recargo, hace las peticiones HTTP, guarda en SQLite, genera el folio al azar y exporta a un archivo .txt.
+Mi predicción es que voy a necesitar unos 7 archivos nuevos en total: 3 en la carpeta de dominio (como pide la guía: modelos, reglas y errores), tal vez 1 o 2 en aplicacion para coordinar, y al menos 2 en infraestructura (uno para la base de datos y otro para la red). Voy a ver si logro que el dominio quede completamente limpio de imports raros
+
 **Observación:**
 
 ```
@@ -56,7 +60,7 @@ Carné:
 ## Etapa 3 — Abstracción y reuso
 
 **Predicción:**
-
+Antes de revisar el código, predije que cambiar CONFIG["vigencia_dias"] afectaría un solo lugar (donde se calcula la fecha de vencimiento). Sin embargo, al observar legado.py, noté que este cambio altera la fecha que se envía a todas las farmacias (líneas 69, 74, y 78 de legado.py). Esto demuestra el peligro del acoplamiento común: un cambio global afecta el comportamiento de múltiples líneas sin que ninguna función lo indique en sus parámetros
 **Observación:**
 
 ```
@@ -65,6 +69,19 @@ Carné:
 **Explicación:**
 
 **Sello:**
+
+practica-principios-diseno main  ? ❯ python herramientas/marcador.py 2
+
+  MARCADOR DE LA PRÁCTICA · Principios de diseño
+  Sebastian Chaves Rojas   carné 2025121975
+  ────────────────────────────────────────────────────────────
+  Etapa 2  Acoplamiento                                 █████          verde
+  ────────────────────────────────────────────────────────────
+  5 pruebas en verde · 0 por resolver
+  corrida #1 registrada
+  SELLO: 430cd0f644b473c8
+  Cópielo en la entrada de BITACORA.md de la etapa que acaba de cerrar.
+
 
 ## Etapa 4 — Flexibilidad, obsolescencia y portabilidad
 
