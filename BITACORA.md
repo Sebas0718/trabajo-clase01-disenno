@@ -28,23 +28,20 @@ Antes de abrir legado.py, mi predicción es que se están violando unos 8 o 9 de
 
 **Sello:**
 
+
+  MARCADOR DE LA PRÁCTICA · Principios de diseño
+  Sebastian Chaves Rojas   carné 2025121975
+  ────────────────────────────────────────────────────────────
+  Etapa 0  Diagnóstico                                  ████           verde
+  ────────────────────────────────────────────────────────────
+  4 pruebas en verde · 0 por resolver
+  corrida #5 registrada
+  SELLO: 09aa046b30cf7a7c
+  Cópielo en la entrada de BITACORA.md de la etapa que acaba de cerrar.
+
 ## Etapa 1 — Dividir y conquistar, cohesión
 
 **Predicción:**
-
-**Observación:**
-
-```
-```
-
-**Explicación:**
-
-**Sello:**
-
-## Etapa 2 — Reducir el acoplamiento
-
-**Predicción:**
-
 Leyendo la clase ServicioRecetas, le cuento 6 responsabilidades distintas: valida la entrada, calcula el recargo, hace las peticiones HTTP, guarda en SQLite, genera el folio al azar y exporta a un archivo .txt.
 Mi predicción es que voy a necesitar unos 7 archivos nuevos en total: 3 en la carpeta de dominio (como pide la guía: modelos, reglas y errores), tal vez 1 o 2 en aplicacion para coordinar, y al menos 2 en infraestructura (uno para la base de datos y otro para la red). Voy a ver si logro que el dominio quede completamente limpio de imports raros
 
@@ -57,10 +54,21 @@ Mi predicción es que voy a necesitar unos 7 archivos nuevos en total: 3 en la c
 
 **Sello:**
 
-## Etapa 3 — Abstracción y reuso
+  MARCADOR DE LA PRÁCTICA · Principios de diseño
+  Sebastian Chaves Rojas   carné 2025121975
+  ────────────────────────────────────────────────────────────
+  Etapa 1  Dividir y conquistar · cohesión              ███████        verde
+  ────────────────────────────────────────────────────────────
+  7 pruebas en verde · 0 por resolver
+  corrida #6 registrada
+  SELLO: e77f1f6ee79f8130
+  Cópielo en la entrada de BITACORA.md de la etapa que acaba de cerrar.
+
+## Etapa 2 — Reducir el acoplamiento
 
 **Predicción:**
 Antes de revisar el código, predije que cambiar CONFIG["vigencia_dias"] afectaría un solo lugar (donde se calcula la fecha de vencimiento). Sin embargo, al observar legado.py, noté que este cambio altera la fecha que se envía a todas las farmacias (líneas 69, 74, y 78 de legado.py). Esto demuestra el peligro del acoplamiento común: un cambio global afecta el comportamiento de múltiples líneas sin que ninguna función lo indique en sus parámetros
+
 **Observación:**
 
 ```
@@ -69,7 +77,6 @@ Antes de revisar el código, predije que cambiar CONFIG["vigencia_dias"] afectar
 **Explicación:**
 
 **Sello:**
-
 practica-principios-diseno main  ? ❯ python herramientas/marcador.py 2
 
   MARCADOR DE LA PRÁCTICA · Principios de diseño
@@ -82,10 +89,10 @@ practica-principios-diseno main  ? ❯ python herramientas/marcador.py 2
   SELLO: 430cd0f644b473c8
   Cópielo en la entrada de BITACORA.md de la etapa que acaba de cerrar.
 
-
-## Etapa 4 — Flexibilidad, obsolescencia y portabilidad
+## Etapa 3 — Abstracción y reuso
 
 **Predicción:**
+Al correr el comando grep, veo que las llaves exactas del JSON del proveedor (full_name, risk_lvl, etc.) aparecen incrustadas directamente en nuestro código. Esto viola la regla de Parnas sobre ocultar lo volátil. Mi predicción es que, al aplicar puertos y adaptadores, este número bajará a cero dentro de la carpeta dominio y aplicacion, y estas llaves solo van a existir encapsuladas en un adaptador dentro de la carpeta infraestructura
 
 **Observación:**
 
@@ -95,6 +102,45 @@ practica-principios-diseno main  ? ❯ python herramientas/marcador.py 2
 **Explicación:**
 
 **Sello:**
+
+practica-principios-diseno main  ? ❯ python herramientas/marcador.py 3
+
+  MARCADOR DE LA PRÁCTICA · Principios de diseño
+  Sebastian Chaves Rojas   carné 2025121975
+  ────────────────────────────────────────────────────────────
+  Etapa 3  Abstracción y reuso                          ███████        verde
+  ────────────────────────────────────────────────────────────
+  7 pruebas en verde · 0 por resolver
+  corrida #2 registrada
+  SELLO: a3d2365c8cc8993c
+  Cópielo en la entrada de BITACORA.md de la etapa que acaba de cerrar.
+
+## Etapa 4 — Flexibilidad, obsolescencia y portabilidad
+
+**Predicción:**
+
+
+El experimento define una cuarta cadena llamada FarmaViva desde afuera del código principal. Mi predicción es que si mi diseño desacopló bien las pasarelas usando un registro dinámico, el sistema procesará la receta con éxito sin necesidad de que toque ni una sola línea del servicio central. Si por el contrario hubiera dejado un condicional (if/elif) rígido, la prueba fallará al intentar buscar a FarmaViva
+
+
+**Observación:**
+
+```
+```
+
+**Explicación:**
+
+**Sello:**
+
+  MARCADOR DE LA PRÁCTICA · Principios de diseño
+  Sebastian Chaves Rojas   carné 2025121975
+  ────────────────────────────────────────────────────────────
+  Etapa 4  Flexibilidad · obsolescencia · portabilidad  ███████        verde
+  ────────────────────────────────────────────────────────────
+  7 pruebas en verde · 0 por resolver
+  corrida #8 registrada
+  SELLO: 5c770a55f08e1cb9
+  Cópielo en la entrada de BITACORA.md de la etapa que acaba de cerrar.
 
 ## Etapa 5 — Testabilidad
 

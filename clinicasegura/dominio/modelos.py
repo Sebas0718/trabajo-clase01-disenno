@@ -11,8 +11,10 @@ class Receta:
     dias: int
     dosis_mg: float
     riesgo_alto: bool = False
+    medicamento: str = ""
 
 @dataclass(frozen=True)
 class Despacho:
     folio: str
     cadena: str
+    vence: str
