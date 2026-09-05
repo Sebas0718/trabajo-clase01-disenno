@@ -1,6 +1,11 @@
 # clinicasegura/arranque.py
 import os
 from clinicasegura.dominio.servicio import EmisionDeRecetas
+from clinicasegura.infraestructura.adaptadores import (
+    BitacoraMemoria,
+    GeneradorFolioUUID,
+    RelojSistema,
+)
 from clinicasegura.infraestructura.registro import construir_registro
 
 def construir_servicio():
@@ -10,4 +15,9 @@ def construir_servicio():
         "timeout": float(os.getenv("TIMEOUT", 1.5))
     }
     pasarelas = construir_registro({})
-    return EmisionDeRecetas(pasarelas=pasarelas, configuracion=configuracion)
+    return EmisionDeRecetas(
+        pasarelas=pasarelas,
+        reloj=RelojSistema(),
+        folios=GeneradorFolioUUID(),
+        bitacora=BitacoraMemoria(),
+    )

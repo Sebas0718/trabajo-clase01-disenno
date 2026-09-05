@@ -21,10 +21,22 @@ Antes de abrir legado.py, mi predicción es que se están violando unos 8 o 9 de
 
 **Observación:**
 
+Las siete pruebas de etapa 5 pasan sin red ni base de datos. El servicio recibe
+`pasarelas`, `reloj`, `folios` y `bitacora` en `clinicasegura/dominio/servicio.py:7`;
+la fecha se calcula desde el reloj inyectado en `servicio.py:20` y las tres
+pruebas propias cubren reloj fijo, cadena caída y receta inválida en
+`mis_pruebas/test_propias.py:33`.
+
 ```
 ```
 
 **Explicación:**
+
+La predicción se confirmó: los dobles de `mis_pruebas/test_propias.py` permiten
+controlar el reloj, el folio, la farmacia y la bitácora desde fuera del caso de
+uso, y la salida `Despacho` más los eventos registrados hacen observable el
+resultado. La prueba de cadena caída además verifica el error de dominio y su
+contexto en `servicio.py:28`.
 
 **Sello:**
 
@@ -53,6 +65,8 @@ Mi predicción es que voy a necesitar unos 7 archivos nuevos en total: 3 en la c
 **Explicación:**
 
 **Sello:**
+
+3b303cc6d9dffdc4
 
   MARCADOR DE LA PRÁCTICA · Principios de diseño
   Sebastian Chaves Rojas   carné 2025121975
@@ -145,6 +159,7 @@ El experimento define una cuarta cadena llamada FarmaViva desde afuera del códi
 ## Etapa 5 — Testabilidad
 
 **Predicción:**
+Intentar emitir una receta con el código legado requiere que la base de datos SQLite esté accesible, que haya conexión de red real para llamar a las APIs de las farmacias, y que el reloj y los números aleatorios corran en tiempo real sin control externo. Mi predicción es que al aislar el servicio e inyectar un reloj fijo, un generador de folios y adaptadores simulados, podré correr pruebas automatizadas instantáneas sin tocar red ni base de datos real
 
 **Observación:**
 
